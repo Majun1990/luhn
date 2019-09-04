@@ -1,24 +1,21 @@
 module Luhn
     def self.is_valid?(card_num)
         #break the credit card number into individual number
-        ind_num = card_num.to_s.each_char.map{|n|n.to_i} 
+        ind_num = card_num.to_s.split('')
         # starting from the right, double every second digit
         ind_num = []
+        rev_num = ind_num.reverse
+        rev_num =[]
         num_to_sum = []
-        num_to_sum = ind_num.reverse.each_with_index do |ind_num,idx|
-            if num_to_sum.length.odd?
-                if idx %2 != 0 
-                    if num_to_sum[idx] >= 10
-                        num_to_sum[idx] = (ind_num*2)-9
-                    else
-                        num_to_sum[idx]= ind_num * 2
-                    end
-                end
+        num_to_sum = rev_num.each_with_index do |rev_num,idx|
+            if idx %2 != 0 
+                num_sum +=  rev_num.to_i*2>9 ? (rev_num.to_i*2)-9 : rev_num.to_i * 2
+            else
+                num_sum += rev_num.to_i
             end
         end
-        sum = num_to_sum.inject(0){|sum, x| sum + x }
             #if sum is divisible by 10, it's a valid number, otherwise it's invalid
-            if sum %10 == 0
+            if num_sum %10 === 0
                 return true
             else
                 return false
@@ -26,3 +23,6 @@ module Luhn
 
     end
 end
+
+
+
